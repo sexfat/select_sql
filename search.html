@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <title>搜尋結果頁面</title>
+
+    <style>
+        table , tr , td  , th{
+            border: 1px solid #000;
+            border-collapse:collapse;
+            margin-top: 10px;
+
+        }
+        table {
+            width: 700px;
+        }
+    </style>
+</head>
+
+<body>
+    <div><input type="search" name="" id="search"></div>
+    <div id="search_result"></div>
+
+    <script>
+        // jquery 開始
+        $(document).ready(function () {
+            load_data();
+
+            function load_data(query) {
+                $.ajax({
+                    url: 'search.php',
+                    method: "GET",
+                    data: {
+                        s: query
+                    },
+                    success: function (data) {
+                        $('#search_result').html(data);
+                    }
+                });
+                $('#search').keydown(function (event) {
+                    if (event.which == 13) {
+                        var search = $(this).val();
+                        if (search != '') {
+                            load_data(search);
+                        } else {
+                            load_data();
+                        }
+                    }
+                });
+            }
+        })
+    </script>
+
+
+
+
+</body>
+
+</html>
